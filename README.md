@@ -44,7 +44,7 @@ Compile the source code using the MPI wrapper:
 mpicc -O3 -o community_detect label_propagation.c
 
 ### Execution
-mpirun -np 4 ./community_detect G5.txt output_labels.txt
+mpirun -np 4 ./community_detect G4.txt output_labels.txt
 
 # Example check for local execution
 valgrind --leak-check=full ./community_detect input.txt
