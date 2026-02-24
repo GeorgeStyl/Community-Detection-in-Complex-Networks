@@ -4,7 +4,7 @@ A high-performance implementation of the **Label Propagation Algorithm (LPA)** f
 
 > **Academic Note:** This project was developed as part of a course for my **Master’s Degree**.
 
-## Overview
+## 📖 Overview
 
 The Label Propagation Algorithm is a fast, near-linear time method for finding communities in a network. This implementation is designed for distributed-memory systems and uses the **Compressed Sparse Row (CSR)** format to optimize memory and traversal speed.
 
@@ -27,13 +27,12 @@ The graph is represented using a **CSR** structure, which stores all edges in a 
 ### Core Algorithm
 1.  **Graph Loading:** Rank 0 reads the input edge list and broadcasts the structure to all workers.
 2.  **Workload Distribution:** Each process is assigned a specific range of nodes based on its rank.
-3.  **Iterative Update:**
-    * Nodes are shuffled locally to avoid oscillations.
+3.  **Iterative Update:** * Nodes are shuffled locally to avoid oscillations.
     * Each process determines the "best label" for its nodes by finding the most frequent label among neighbors.
 4.  **Global Synchronization:** Labels are synchronized across all processes using `MPI_Allgatherv` at the end of every iteration.
 5.  **Termination:** The process repeats until a global steady state is reached (no labels change).
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 * A C compiler (e.g., `gcc`)
@@ -43,3 +42,9 @@ The graph is represented using a **CSR** structure, which stores all edges in a 
 Compile the source code using the MPI wrapper:
 ```bash
 mpicc -O3 -o community_detect label_propagation.c
+
+### Execution
+mpirun -np 4 ./community_detect G5.txt output_labels.txt
+
+# Example check for local execution
+valgrind --leak-check=full ./community_detect input.txt
